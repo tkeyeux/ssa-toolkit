@@ -30,9 +30,14 @@ def test_propagate_matches_library(iss):
     assert np.allclose(state.velocity, v_ref, atol=1e-12)
 
 def test_energy_conservation(iss):
-    """Vis-visa: specific energy must be constant along a short arc."""
+    """Sanity check: osculating specific energy stays in a tight band along an arc.
+
+    SGP4 includes J2/drag perturbations, so two-body energy is not exactly
+    conserved; we only check against gross errors (units, constants, frames).
+    Observed variation is ~0.05 km^2/s^2 (~0.2%) for a LEO arc of 45 min.
+    """
     minutes = np.linspace(0, 45, 20)
     r, v = propagate_minutes(iss, minutes)
     energy = np.linalg.norm(v, axis=1) ** 2 / 2 - 398600.4418 / np.linalg.norm(r, axis=1)
-
-    assert np.ptp(energy) < 1e-6
+    assert np.abs(energy).mean() > 20  # LEO: a ~ 6790 km -> |energy| ~ 29 km^2/s^2
+    assert np.ptp(energy) < 0.5

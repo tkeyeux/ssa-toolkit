@@ -12,7 +12,7 @@ def test_cache_exists():
 def test_tle_format_wellformed():
     f = _tle_files()[0]
     lines = f.read_text().strip().splitlines()
-    assert len(lines >= 3 and len(lines % 3 == 0))
+    assert len(lines) >= 3 and len(lines) % 3 == 0
     for l in lines[1::3]:
         assert l.startswith("1 ")
     for l in lines[2::3]:
