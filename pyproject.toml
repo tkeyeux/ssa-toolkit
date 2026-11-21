@@ -1,10 +1,10 @@
-[projet]
+[project]
 name = "ssa-toolkit"
 version = "0.1.0"
 description = "Open-source toolkit for orbital tracking, collision probability and space debris anomaly detection"
 readme = "README.md"
 requires-python = ">=3.11"
-licence = {text = "Apache-2.0}
+license = { text = "Apache-2.0" }
 dependencies = [
     "numpy>=1.26",
     "pandas>=2.1",
@@ -12,7 +12,7 @@ dependencies = [
     "requests>=2.31",
 ]
 
-[project.optional-depedencies]
+[project.optional-dependencies]
 dev = ["pytest>=8", "pytest-cov", "ruff"]
 ml = ["xgboost>=2.0", "scikit-learn"]
 
@@ -20,7 +20,7 @@ ml = ["xgboost>=2.0", "scikit-learn"]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
-[tools.setuptools.packages.find]
+[tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.ruff]
