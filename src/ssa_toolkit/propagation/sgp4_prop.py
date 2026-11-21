@@ -28,7 +28,7 @@ def propagate(sat: Satrec, jd: float, fr: float) -> State:
         raise RuntimeError(f"SGP4 propagation error {e} for NORAD {sat.satnum}")
     return State(position=np.asarray(r), velocity=np.asarray(v), epoch_jd=jd + fr, error=e)
 
-def propagate_minutes(sat: Satred, minutes: no.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def propagate_minutes(sat: Satrec, minutes: no.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """Vectorized propagation from TLE epoch: minutes from epoch -> (N,3) pos & vel arrays in km."""
     r, v = [], []
     for m in minutes:
