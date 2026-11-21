@@ -5,10 +5,9 @@ oracle values are recomputed with sgp4.api directly, so what we test here is the
 
 import numpy as np
 import pytest
-
 from sgp4.api import Satrec, jday
 
-from ssa_toolkit.propagation import (geodetic_altitude_km, parse_tle, propagate, propagate_minutes)
+from ssa_toolkit.propagation import parse_tle, propagate, propagate_minutes
 
 LINE1 = "1 25544U 98067A   24050.54791425  .00016756  00000+0  30779-3 0  9993"
 LINE2 = "2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.4951271944soo".replace("soo", "00")

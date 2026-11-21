@@ -1,5 +1,5 @@
-import re
 from pathlib import Path
+
 
 def _tle_files():
     cache = Path(__file__).resolve().parents[1] / "data" / "cache"
