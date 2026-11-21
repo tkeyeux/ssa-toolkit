@@ -29,18 +29,17 @@ def propagate(sat: Satrec, jd: float, fr: float) -> State:
     return State(position=np.asarray(r), velocity=np.asarray(v), epoch_jd=jd + fr, error=e)
 
 def propagate_minutes(sat: Satrec, minutes: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Vectorized propagation from TLE epoch: minutes from epoch -> (N,3) pos & vel arrays in km."""
+    """Propagate from TLE epoch by minutes. Returns (N,3) pos [km] and vel [km/s]."""
     r, v = [], []
     for m in minutes:
-        jd, fr = sat.jdsatepoch, sat.jdsatepochF + m /1440.0
-        e, ri, vi = sat.sgp4(jd, fr)
+        e, ri, vi = sat.sgp4_tsince(float(m))
         if e != 0:
             raise RuntimeError(f"SGP4 error {e} at t={m} min")
         r.append(ri)
         v.append(vi)
-    return np.asarray(r), np.asarray(v)
+    return np.asarray(r), np.asarray(v)   
 
-def geodetic_altitude_km(r: nr.ndarray) -> float:
+def geodetic_altitude_km(r: np.ndarray) -> float:
     """Quick altitude check: distance from geocenter minus Earth mean radius."""
     return float(np.linalg.norm(r)) - 6371.0088
 
