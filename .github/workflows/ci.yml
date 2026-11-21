@@ -1,0 +1,14 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version : "3.11"}
+      - run: pip install -e ".[dev]"
+      - run: | 
+          python data/download_celestrak.py || echo "::warning::download failed, skipping data tests"
+      - run: pytest -q --cov=ssa_toolkit --cov-report=xml
+      - run: ruff check src tests
